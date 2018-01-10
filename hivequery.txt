@@ -1,0 +1,13 @@
+create table array(sep string, arra array<string>)
+row format delimited fields terminated by ','
+collection items terminated by ':';
+
+
+load data local inpath '/home/acadgild/empdata.txt'
+into table array;
+
+add jar /home/acadgild/hiveconcat.jar;
+
+create temporary function upstr as 'concat.concatstring';
+
+select upstr(sep,arra) from array;
